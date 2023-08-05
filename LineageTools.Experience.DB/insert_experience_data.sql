@@ -1,4 +1,4 @@
-insert into ExperienceToLevel (Level, ExpCount)
+insert into ExperienceToLevel (Id, Level, ExpCount)
 values 
 (uuid(),1, 0), 
 (uuid(),2, 67), 
@@ -78,4 +78,6 @@ values
 (uuid(),76, 931275813), 
 (uuid(),77, 1151275550), 
 (uuid(),78, 1511275986), 
-(uuid(),79, 2099275960);
+(uuid(),79, 2099275960),
+(uuid(),80, 4199994963),
+(uuid(),81, 6299994999);
