@@ -24,7 +24,6 @@ namespace LineageTools
 
 			app.UseCors();
 			app.UseHttpsRedirection();
-			app.UseAuthorization();
 			app.MapControllers();
 			app.Run();
 		}
