@@ -1,4 +1,5 @@
 using LineageTools.Experience.DB;
+using Maid.Core;
 
 namespace LineageTools
 {
@@ -16,13 +17,23 @@ namespace LineageTools
 
 			var app = builder.Build();
 
-			// Configure the HTTP request pipeline.
-			//if (app.Environment.IsDevelopment()) {
+			if (app.Environment.IsDevelopment()) {
 				app.UseSwagger();
 				app.UseSwaggerUI();
-			//}
+			}
 
+			var uiOrigin = builder.Configuration["UIOrigin"];
+			if (uiOrigin.IsNotEmpty()) {
+				builder.Services.AddCors(options =>
+				{
+					options.AddDefaultPolicy(
+						policy => {
+							policy.WithOrigins(uiOrigin);
+						});
+				});
+			}
 			app.UseCors();
+
 			app.UseHttpsRedirection();
 			app.MapControllers();
 			app.Run();
