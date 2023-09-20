@@ -15,6 +15,19 @@ namespace LineageTools
 			var connection = builder.Configuration["Experience_ConnectionString"];
 			LineageExperieceStartup.SetupDB(builder.Services, connection);
 
+			var uiOrigin = builder.Configuration["UIOrigin"];
+
+			if (uiOrigin.IsNotEmpty()) {
+				builder.Services.AddCors(options => {
+					options.AddPolicy(name: "UI",
+									policy => {
+										policy.WithOrigins()
+											.AllowAnyMethod()
+											.AllowAnyHeader();
+									 });
+				});
+			}
+
 			var app = builder.Build();
 
 			if (app.Environment.IsDevelopment()) {
@@ -22,17 +35,9 @@ namespace LineageTools
 				app.UseSwaggerUI();
 			}
 
-			var uiOrigin = builder.Configuration["UIOrigin"];
 			if (uiOrigin.IsNotEmpty()) {
-				builder.Services.AddCors(options =>
-				{
-					options.AddDefaultPolicy(
-						policy => {
-							policy.WithOrigins(uiOrigin);
-						});
-				});
+				app.UseCors("UI");
 			}
-			app.UseCors();
 
 			app.UseHttpsRedirection();
 			app.MapControllers();
