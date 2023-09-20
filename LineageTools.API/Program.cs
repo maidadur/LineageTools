@@ -21,7 +21,7 @@ namespace LineageTools
 				builder.Services.AddCors(options => {
 					options.AddPolicy(name: "UI",
 									policy => {
-										policy.WithOrigins()
+										policy.WithOrigins(uiOrigin)
 											.AllowAnyMethod()
 											.AllowAnyHeader();
 									 });
